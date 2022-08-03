@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'counter_cubit.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+void navigateToCalculate(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (BuildContext context) {
+      return MyApp();
+    }),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +50,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int count = 0;
 
+  get mycontroller => null;
+
   void _incrementCounter() {
     setState(() {
       count++;
@@ -74,6 +86,17 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                TextField(
+                  controller: mycontroller,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  decoration: InputDecoration(
+                    labelText: 'Enter Number',
+                    hintText: 'Enter Your Number',
+                  ),
+                ),
                 Text(
                   "$state",
                   style: TextStyle(fontSize: 100),
@@ -93,9 +116,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                     onPressed: () {
                       cubit.reset();
-                      Icons.add;
                     },
-                    child: const Text("Reset"))
+                    child: const Text("Reset")),
+                ElevatedButton(
+                  onPressed: () {
+                    cubit.divide();
+                  },
+                  child: const Text("divide"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    cubit.multiply();
+                  },
+                  child: const Text("multiply"),
+                ),
               ],
             ),
           );

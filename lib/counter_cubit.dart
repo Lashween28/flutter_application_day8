@@ -14,4 +14,12 @@ class CounterCubit extends Cubit<int> {
   void reset() {
     emit(0);
   }
+
+  void divide() {
+    emit(state ~/ 2);
+  }
+
+  void multiply() {
+    emit(state * 2);
+  }
 }
